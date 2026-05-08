@@ -16,7 +16,7 @@ mongoose.connect(process.env.MONGO_URI)
         name: 'Royal Enfield Meteor 350',
         type: 'bike',
         basePrice: 195000,
-        images: ['https://imgd.aeplcdn.com/600x337/n/cw/ec/43482/meteor-350-right-front-three-quarter.jpeg'],
+        images: ['https://images.unsplash.com/photo-1558981403-c5f9899a28bc?auto=format&fit=crop&q=80&w=800'],
         availableOptions: [
           { category: 'color',       name: 'Fireball Red',            price: 0     },
           { category: 'color',       name: 'Supernova Blue',           price: 0     },
@@ -41,7 +41,7 @@ mongoose.connect(process.env.MONGO_URI)
         name: 'KTM Duke 390',
         type: 'bike',
         basePrice: 310000,
-        images: ['https://imgd.aeplcdn.com/600x337/n/cw/ec/1217281/duke-390-right-front-three-quarter.jpeg'],
+        images: ['https://images.unsplash.com/photo-1622185135505-2d795003994a?auto=format&fit=crop&q=80&w=800'],
         availableOptions: [
           { category: 'color',       name: 'KTM Orange',               price: 0     },
           { category: 'color',       name: 'Ceramic White',            price: 0     },
@@ -66,7 +66,7 @@ mongoose.connect(process.env.MONGO_URI)
         name: 'Bajaj Pulsar NS200',
         type: 'bike',
         basePrice: 148000,
-        images: ['https://imgd.aeplcdn.com/600x337/n/cw/ec/43482/ns200-right-front-three-quarter.jpeg'],
+        images: ['https://images.unsplash.com/photo-1609630875171-b132115ee30a?auto=format&fit=crop&q=80&w=800'],
         availableOptions: [
           { category: 'color',       name: 'Fiery Orange',             price: 0     },
           { category: 'color',       name: 'Midnight Black',           price: 0     },
@@ -90,7 +90,7 @@ mongoose.connect(process.env.MONGO_URI)
         name: 'Honda CB350 H\'ness',
         type: 'bike',
         basePrice: 210000,
-        images: ['https://imgd.aeplcdn.com/600x337/n/cw/ec/44709/h-ness-cb350-right-front-three-quarter.jpeg'],
+        images: ['https://images.unsplash.com/photo-1591637333184-19aa84b3e01f?auto=format&fit=crop&q=80&w=800'],
         availableOptions: [
           { category: 'color',       name: 'Pearl Igneous Black',      price: 0     },
           { category: 'color',       name: 'Precious Red Metallic',    price: 0     },
@@ -114,7 +114,7 @@ mongoose.connect(process.env.MONGO_URI)
         name: 'TVS Apache RTR 200 4V',
         type: 'bike',
         basePrice: 143000,
-        images: ['https://imgd.aeplcdn.com/600x337/n/cw/ec/41415/apache-rtr-200-4v-right-front-three-quarter-2.jpeg'],
+        images: ['https://images.unsplash.com/photo-1558981403-c5f9899a28bc?auto=format&fit=crop&q=80&w=800'],
         availableOptions: [
           { category: 'color',       name: 'Knight Black',             price: 0     },
           { category: 'color',       name: 'Pearl White',              price: 0     },
@@ -139,7 +139,7 @@ mongoose.connect(process.env.MONGO_URI)
         name: 'Maruti Swift',
         type: 'car',
         basePrice: 600000,
-        images: ['https://imgd.aeplcdn.com/600x337/n/cw/ec/159669/swift-exterior-right-front-three-quarter-2.jpeg'],
+        images: ['https://images.unsplash.com/photo-1549317661-bd32c8ce0db2?auto=format&fit=crop&q=80&w=800'],
         availableOptions: [
           { category: 'color',       name: 'Pearl White',              price: 0     },
           { category: 'color',       name: 'Metallic Grey',            price: 5000  },
@@ -165,7 +165,7 @@ mongoose.connect(process.env.MONGO_URI)
         name: 'Hyundai Creta',
         type: 'car',
         basePrice: 1100000,
-        images: ['https://imgd.aeplcdn.com/600x337/n/cw/ec/41197/creta-exterior-right-front-three-quarter-3.jpeg'],
+        images: ['https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?auto=format&fit=crop&q=80&w=800'],
         availableOptions: [
           { category: 'color',       name: 'Typhoon Silver',           price: 0     },
           { category: 'color',       name: 'Starry Night Black',       price: 5000  },
@@ -189,7 +189,7 @@ mongoose.connect(process.env.MONGO_URI)
         name: 'Tata Nexon',
         type: 'car',
         basePrice: 850000,
-        images: ['https://imgd.aeplcdn.com/600x337/n/cw/ec/141867/nexon-exterior-right-front-three-quarter-3.jpeg'],
+        images: ['https://images.unsplash.com/photo-1511919884226-fd3cad34687c?auto=format&fit=crop&q=80&w=800'],
         availableOptions: [
           { category: 'color',       name: 'Flame Red',                price: 0     },
           { category: 'color',       name: 'Daytona Grey',             price: 5000  },
@@ -213,7 +213,7 @@ mongoose.connect(process.env.MONGO_URI)
         name: 'Mahindra Scorpio-N',
         type: 'car',
         basePrice: 1350000,
-        images: ['https://imgd.aeplcdn.com/600x337/n/cw/ec/40087/scorpio-n-exterior-right-front-three-quarter.jpeg'],
+        images: ['https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?auto=format&fit=crop&q=80&w=800'],
         availableOptions: [
           { category: 'color',       name: 'Dazzling Silver',          price: 0     },
           { category: 'color',       name: 'Deep Forest',              price: 5000  },
@@ -240,7 +240,7 @@ mongoose.connect(process.env.MONGO_URI)
         name: 'Honda City',
         type: 'car',
         basePrice: 1200000,
-        images: ['https://imgd.aeplcdn.com/600x337/n/cw/ec/134287/city-exterior-right-front-three-quarter-4.jpeg'],
+        images: ['https://images.unsplash.com/photo-1590362891125-f07efd90eec9?auto=format&fit=crop&q=80&w=800'],
         availableOptions: [
           { category: 'color',       name: 'Lunar Silver Metallic',    price: 0     },
           { category: 'color',       name: 'Radiant Red Metallic',     price: 5000  },
