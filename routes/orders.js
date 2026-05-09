@@ -14,7 +14,11 @@ router.post('/', authMiddleware, async (req, res) => {
 
 router.get('/', authMiddleware, async (req, res) => {
   try {
-    const orders = await Order.find({ userId: req.userId }).populate('items');
+    const orders = await Order.find({ userId: req.userId }).populate({
+      path: 'items',
+      populate: { path: 'vehicleId' }
+    });
+
     res.json(orders);
   } catch (err) { res.status(500).json({ message: err.message }); }
 });
