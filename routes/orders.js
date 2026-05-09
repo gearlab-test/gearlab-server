@@ -4,9 +4,11 @@ const authMiddleware = require('../middleware/auth');
 
 router.post('/', authMiddleware, async (req, res) => {
   try {
-    const { items, totalPrice, serviceCenter, bookingDate } = req.body;
+    const { items, totalPrice, serviceCenter, bookingDate, workshopId } = req.body;
+    if (!workshopId) return res.status(400).json({ message: 'Workshop selection is required' });
+    
     const order = await Order.create({
-      userId: req.userId, items, totalPrice, serviceCenter, bookingDate
+      userId: req.userId, items, totalPrice, serviceCenter, bookingDate, workshopId
     });
     res.json(order);
   } catch (err) { res.status(500).json({ message: err.message }); }
@@ -14,19 +16,21 @@ router.post('/', authMiddleware, async (req, res) => {
 
 router.get('/', authMiddleware, async (req, res) => {
   try {
-    const orders = await Order.find({ userId: req.userId }).populate({
-      path: 'items',
-      populate: { path: 'vehicleId' }
-    });
+    const orders = await Order.find({ userId: req.userId })
+      .populate('workshopId', 'name')
+      .populate({
+        path: 'items',
+        populate: { path: 'vehicleId' }
+      });
 
     res.json(orders);
   } catch (err) { res.status(500).json({ message: err.message }); }
 });
 
-// Workshop: Get All Orders
-router.get('/workshop', async (req, res) => {
+// Workshop: Get All Orders assigned to THIS workshop
+router.get('/workshop', authMiddleware, async (req, res) => {
   try {
-    const orders = await Order.find()
+    const orders = await Order.find({ workshopId: req.userId })
       .populate('userId', 'name email')
       .populate({
         path: 'items',
@@ -36,6 +40,7 @@ router.get('/workshop', async (req, res) => {
     res.json(orders);
   } catch (err) { res.status(500).json({ message: err.message }); }
 });
+
 
 // Workshop: Update Order Status
 router.patch('/:id/status', async (req, res) => {

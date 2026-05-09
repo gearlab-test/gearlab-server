@@ -65,4 +65,14 @@ router.get('/me', require('../middleware/auth'), async (req, res) => {
 });
 
 
-module.exports = router;
+// Get All Authorized Workshops (for customers to choose)
+router.get('/workshops', async (req, res) => {
+  try {
+    const workshops = await User.find({ role: 'workshop', isApproved: true }).select('name email');
+    res.json(workshops);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+});
+
+module.exports = router;
