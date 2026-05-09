@@ -12,6 +12,8 @@ app.use(cors({
     'https://gearlab-client.vercel.app',
     /\.vercel\.app$/        // covers all preview URLs too
   ],
+
+
   credentials: true
 }));
 
@@ -24,6 +26,8 @@ app.use('/api/config',   require('./routes/config'));
 app.use('/api/cart',     require('./routes/cart'));
 app.use('/api/orders',   require('./routes/orders'));
 app.use('/api/garages',  require('./routes/garages'));
+app.use('/api/admin',    require('./routes/admin'));
+
 
 // Start server
 const PORT = process.env.PORT || 5000;

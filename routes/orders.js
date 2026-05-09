@@ -23,4 +23,30 @@ router.get('/', authMiddleware, async (req, res) => {
   } catch (err) { res.status(500).json({ message: err.message }); }
 });
 
+// Workshop: Get All Orders
+router.get('/workshop', async (req, res) => {
+  try {
+    const orders = await Order.find()
+      .populate('userId', 'name email')
+      .populate({
+        path: 'items',
+        populate: { path: 'vehicleId' }
+      })
+      .sort({ createdAt: -1 });
+    res.json(orders);
+  } catch (err) { res.status(500).json({ message: err.message }); }
+});
+
+// Workshop: Update Order Status
+router.patch('/:id/status', async (req, res) => {
+  try {
+    const { status } = req.body;
+    const order = await Order.findByIdAndUpdate(req.params.id, { status }, { new: true });
+    if (!order) return res.status(404).json({ message: 'Order not found' });
+    res.json(order);
+  } catch (err) { res.status(500).json({ message: err.message }); }
+});
+
 module.exports = router;
+
+
