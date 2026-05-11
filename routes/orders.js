@@ -1,15 +1,23 @@
 const router = require('express').Router();
 const Order = require('../models/Order');
+const Cart = require('../models/Cart');
 const authMiddleware = require('../middleware/auth');
 
 router.post('/', authMiddleware, async (req, res) => {
   try {
-    const { items, totalPrice, serviceCenter, bookingDate, workshopId } = req.body;
+    const { items, totalPrice, serviceCenter, bookingDate, workshopId, customerEmail, customerPhone } = req.body;
     if (!workshopId) return res.status(400).json({ message: 'Workshop selection is required' });
     
     const order = await Order.create({
-      userId: req.userId, items, totalPrice, serviceCenter, bookingDate, workshopId
+      userId: req.userId, items, totalPrice, serviceCenter, bookingDate, workshopId, customerEmail, customerPhone
     });
+
+    // Clear user's cart
+    await Cart.findOneAndUpdate(
+      { userId: req.userId },
+      { $set: { configurations: [] } }
+    );
+
     res.json(order);
   } catch (err) { res.status(500).json({ message: err.message }); }
 });

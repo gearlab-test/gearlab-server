@@ -8,6 +8,8 @@ const orderSchema = new mongoose.Schema({
 
   serviceCenter: { type: String },
   bookingDate:   { type: Date },
+  customerEmail: { type: String },
+  customerPhone: { type: String },
   status:        { type: String, default: 'pending', enum: ['pending', 'confirmed', 'completed'] },
 }, { timestamps: true });
 
