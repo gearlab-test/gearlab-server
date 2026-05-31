@@ -29,7 +29,8 @@ router.get('/', authMiddleware, async (req, res) => {
       .populate({
         path: 'items',
         populate: { path: 'vehicleId' }
-      });
+      })
+      .sort({ createdAt: -1 });
 
     res.json(orders);
   } catch (err) { res.status(500).json({ message: err.message }); }
