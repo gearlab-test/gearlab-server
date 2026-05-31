@@ -1,19 +1,25 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
+const helmet = require('helmet');
+const mongoSanitize = require('express-mongo-sanitize');
 require('dotenv').config();
 
 const app = express();
 
-// ── Replace your old app.use(cors()) with this ──
+// Security Headers
+app.use(helmet());
+
+// Prevent NoSQL injection
+app.use(mongoSanitize());
+
+// CORS Configuration
 app.use(cors({
   origin: [
     'http://localhost:3000',
     'https://gearlab-client.vercel.app',
-    /\.vercel\.app$/        // covers all preview URLs too
+    /^https:\/\/gearlab-client(-[a-z0-9-]+)?\.vercel\.app$/
   ],
-
-
   credentials: true
 }));
 

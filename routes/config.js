@@ -14,7 +14,10 @@ router.post('/', authMiddleware, async (req, res) => {
 
 router.get('/:userId', authMiddleware, async (req, res) => {
   try {
-    const configs = await Configuration.find({ userId: req.userId }).populate('vehicleId');
+    if (req.userId !== req.params.userId && req.userRole !== 'admin') {
+      return res.status(403).json({ message: 'Access denied' });
+    }
+    const configs = await Configuration.find({ userId: req.params.userId }).populate('vehicleId');
     res.json(configs);
   } catch (err) { res.status(500).json({ message: err.message }); }
 });

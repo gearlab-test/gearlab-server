@@ -1,26 +1,51 @@
 const router = require('express').Router();
+const { body, validationResult } = require('express-validator');
 const Order = require('../models/Order');
 const Cart = require('../models/Cart');
 const authMiddleware = require('../middleware/auth');
 
-router.post('/', authMiddleware, async (req, res) => {
-  try {
-    const { items, totalPrice, serviceCenter, bookingDate, workshopId, customerEmail, customerPhone } = req.body;
-    if (!workshopId) return res.status(400).json({ message: 'Workshop selection is required' });
-    
-    const order = await Order.create({
-      userId: req.userId, items, totalPrice, serviceCenter, bookingDate, workshopId, customerEmail, customerPhone
-    });
+router.post(
+  '/',
+  authMiddleware,
+  [
+    body('items').isArray({ min: 1 }).withMessage('Items must be a non-empty array'),
+    body('totalPrice').isFloat({ min: 0 }).withMessage('Total price must be a positive number'),
+    body('serviceCenter').notEmpty().withMessage('Service center is required'),
+    body('bookingDate').isISO8601().withMessage('Booking date must be a valid ISO8601 date'),
+    body('workshopId').isMongoId().withMessage('Invalid workshop ID'),
+    body('customerEmail').isEmail().withMessage('Invalid email address'),
+    body('customerPhone').matches(/^\+?[0-9]{10,15}$/).withMessage('Customer phone must be a valid phone number (10-15 digits)')
+  ],
+  async (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
+    }
 
-    // Clear user's cart
-    await Cart.findOneAndUpdate(
-      { userId: req.userId },
-      { $set: { configurations: [] } }
-    );
+    try {
+      const { items, totalPrice, serviceCenter, bookingDate, workshopId, customerEmail, customerPhone } = req.body;
+      
+      const order = await Order.create({
+        userId: req.userId,
+        items,
+        totalPrice,
+        serviceCenter,
+        bookingDate,
+        workshopId,
+        customerEmail,
+        customerPhone
+      });
 
-    res.json(order);
-  } catch (err) { res.status(500).json({ message: err.message }); }
-});
+      // Clear user's cart
+      await Cart.findOneAndUpdate(
+        { userId: req.userId },
+        { $set: { configurations: [] } }
+      );
+
+      res.json(order);
+    } catch (err) { res.status(500).json({ message: err.message }); }
+  }
+);
 
 router.get('/', authMiddleware, async (req, res) => {
   try {

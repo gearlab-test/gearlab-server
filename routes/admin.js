@@ -3,9 +3,8 @@ const User = require('../models/User');
 const authMiddleware = require('../middleware/auth');
 
 // Middleware to check if user is admin
-const adminMiddleware = async (req, res, next) => {
-  const user = await User.findById(req.userId);
-  if (user && user.role === 'admin') {
+const adminMiddleware = (req, res, next) => {
+  if (req.userRole === 'admin') {
     next();
   } else {
     res.status(403).json({ message: 'Admin access required' });
