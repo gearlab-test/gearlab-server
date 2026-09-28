@@ -27,6 +27,7 @@ app.use(cors({
   origin: [
     'http://localhost:3000',
     'https://gearlab-client.vercel.app',
+    /^https:\/\/[a-z0-9-]+(\.vercel\.app)$/,
     /^https:\/\/gearlab-client(-[a-z0-9-]+)?\.vercel\.app$/
   ],
   credentials: true
