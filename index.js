@@ -34,6 +34,14 @@ app.use(cors({
 
 app.use(express.json());
 
+// Health Check Routes
+app.get('/', (req, res) => {
+  res.status(200).json({ status: 'ok', message: 'GearLab API is running' });
+});
+app.get('/health', (req, res) => {
+  res.status(200).json({ status: 'ok' });
+});
+
 // Routes
 app.use('/api/auth',     require('./routes/auth'));
 app.use('/api/vehicles', require('./routes/vehicles'));
@@ -45,8 +53,8 @@ app.use('/api/admin',    require('./routes/admin'));
 
 
 // Start server
-const PORT = process.env.PORT || 1000;
-app.listen(PORT, () => {
+const PORT = process.env.PORT || 10000;
+app.listen(PORT, '0.0.0.0', () => {
   console.log(`🚀 Server running on port ${PORT}`);
   
   if (!process.env.MONGO_URI) {
