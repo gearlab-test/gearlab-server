@@ -10,8 +10,17 @@ const app = express();
 // Security Headers
 app.use(helmet());
 
-// Prevent NoSQL injection
-app.use(mongoSanitize());
+// Prevent NoSQL injection (Express 5 compatible)
+app.use((req, res, next) => {
+  if (req.body) mongoSanitize.sanitize(req.body);
+  if (req.params) mongoSanitize.sanitize(req.params);
+  if (req.query) {
+    try {
+      mongoSanitize.sanitize(req.query);
+    } catch (_) {}
+  }
+  next();
+});
 
 // CORS Configuration
 app.use(cors({
@@ -36,12 +45,23 @@ app.use('/api/admin',    require('./routes/admin'));
 
 
 // Start server
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 1000;
 app.listen(PORT, () => {
   console.log(`🚀 Server running on port ${PORT}`);
   
-  // Connect to DB after starting server to avoid Render boot timeout
-  mongoose.connect(process.env.MONGO_URI)
+  if (!process.env.MONGO_URI) {
+    console.warn('⚠️ No MONGO_URI provided. Server operating in fallback/demo mode for catalog data.');
+    return;
+  }
+
+  // Connect to DB with a reasonable timeout so queries don't hang indefinitely
+  mongoose.connect(process.env.MONGO_URI, {
+    serverSelectionTimeoutMS: 5000,
+    bufferCommands: false
+  })
     .then(() => console.log('✅ MongoDB connected successfully'))
-    .catch(err => console.error('❌ DB connection error:', err));
+    .catch(err => {
+      console.warn('⚠️ MongoDB connection could not be established:', err.message);
+      console.warn('ℹ️ Running in fallback mode. Vehicle catalog will remain available.');
+    });
 });
