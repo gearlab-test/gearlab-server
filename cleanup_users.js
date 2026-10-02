@@ -10,7 +10,10 @@ mongoose.connect(process.env.MONGO_URI)
       'admin@gearlab.com',
       'test@example.com',
       'authorized@example.com',
-      'titan@example.com'
+      'titan@example.com',
+      'apex@gearlab.com',
+      'velocity@gearlab.com',
+      'central@gearlab.com'
     ];
 
     const result = await User.deleteMany({ email: { $nin: keepEmails } });
